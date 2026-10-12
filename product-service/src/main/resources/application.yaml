@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: product-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product_db
+    username: postgres
+    password: pass
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  # ===== REDIS =====
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 2
+
+  # ===== CACHE =====
+  cache:
+    type: redis
+    redis:
+      time-to-live: 1800000     # 30 phút = 1,800,000 ms
+      cache-null-values: false
+      key-prefix: "product:"
+      use-key-prefix: true
+
+server:
+  port: 8086
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.springframework.cache: TRACE
+    com.pharmacy.productservice: DEBUG
